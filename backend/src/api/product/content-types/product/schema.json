@@ -20,7 +20,9 @@
       }
     },
     "picture": {
-      "type": "media"
+      "type": "media",
+      "multiple": false,
+      "required": false
     },
     "postal": {
       "type": "relation",
