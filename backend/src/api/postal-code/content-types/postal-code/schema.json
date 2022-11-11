@@ -1,0 +1,28 @@
+{
+  "kind": "collectionType",
+  "collectionName": "postal_codes",
+  "info": {
+    "singularName": "postal-code",
+    "pluralName": "postal-codes",
+    "displayName": "Postal Code"
+  },
+  "options": {
+    "draftAndPublish": false,
+    "comment": ""
+  },
+  "attributes": {
+    "municipality_code": {
+      "type": "integer",
+      "required": true,
+      "max": 99999,
+      "min": 10000,
+      "column": {
+        "unique": true
+      }
+    },
+    "name": {
+      "type": "string",
+      "required": true
+    }
+  }
+}
