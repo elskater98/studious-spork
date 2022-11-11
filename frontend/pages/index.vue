@@ -7,6 +7,7 @@
 import Navbar from "~/components/Navbar";
 
 export default {
+  auth: 'guest',
   name: 'IndexPage',
   components: {
     Navbar

@@ -1,7 +1,12 @@
 <template>
   <b-navbar fixed-top="true">
+    <template #start>
+      <b-navbar-item href="#">
+        Home
+      </b-navbar-item>
+    </template>
     <template #end>
-      <b-navbar-item tag="div">
+      <b-navbar-item tag="router-link" :to="{ path: '/login' }">
         <div class="buttons">
           <a class="button is-light">
             Log in
