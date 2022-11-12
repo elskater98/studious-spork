@@ -36,7 +36,7 @@ export default {
     '@nuxtjs/auth-next'
   ],
   axios: {
-    baseURL: process.env.BASE_URL || 'http://localhost:1337/api/'
+    baseURL: process.env.PUBLIC_BASE_URL || 'http://localhost:1337'
   },
   auth: {
     strategies: {
@@ -46,7 +46,7 @@ export default {
         },
         user: {},
         endpoints: {
-          login: {url: '/auth/local', method: 'post', propertyName: 'token'},
+          login: {url: '/api/auth/local', method: 'post', propertyName: 'token'},
           user: false,
           logout: false
         },

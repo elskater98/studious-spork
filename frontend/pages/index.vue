@@ -37,7 +37,7 @@ export default {
     }
   },
   async fetch() {
-    await this.$axios.$get('/products?populate=postal_code,picture').then((res) => {
+    await this.$axios.$get('/api/products?populate=postal_code,picture').then((res) => {
       this.products = res?.data;
     }).catch(err => this.$buefy.toast.open({
       message: "Error while retrieving products :(",
