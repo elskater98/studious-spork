@@ -4,14 +4,17 @@
       <form @submit.prevent="">
         <div class="columns is-flex is-vcentered">
           <div class="column is-four-fifths">
-            <b-input placeholder="Postal Code"
-                     v-model="postalCode"
-                     type="text"
-                     icon="map-marker">
-            </b-input>
+            <b-autocomplete rounded
+                            placeholder="Postal Code"
+                            :value="name"
+                            :data="filterPostalCodes"
+                            clearable
+                            @select="option => selected = option"
+                            icon="map-marker">
+            </b-autocomplete>
           </div>
           <div class="column">
-            <b-button native-type="submit" value="Login">Search</b-button>
+            <b-button v-on:click="findByPostalCode">Search</b-button>
           </div>
         </div>
       </form>
@@ -32,17 +35,49 @@ export default {
   components: {ProductCard},
   data() {
     return {
-      products: [{id: 1, name: "patata"}, {id: 2, name: "patata"}],
-      postalCode: null
+      products: [],
+      availablePostalCodes: [],
+      name: '',
+      selected: null
+    }
+  },
+  methods: {
+    // https://docs.strapi.io/developer-docs/latest/developer-resources/database-apis-reference/rest/filtering-locale-publication.html#filtering
+    async findByPostalCode() {
+      if (this.selected === null) {
+        await this.$axios.$get('/api/products?populate=postal_code,picture').then((res) => {
+          this.products = res?.data.data;
+        })
+      } else {
+        await this.$axios.get("/api/products?populate=postal_code,picture&filters[postal_code][municipality_code][$eq]=" + this.selected).then((res) => {
+          this.products = res?.data.data;
+        })
+      }
+    },
+  },
+  computed: {
+    filterPostalCodes() {
+      return this.availablePostalCodes.filter((option) => {
+        return option.toString().toLowerCase().indexOf(this.name.toString().toLowerCase()) >= 0;
+      })
     }
   },
   async fetch() {
     await this.$axios.$get('/api/products?populate=postal_code,picture').then((res) => {
       this.products = res?.data;
     }).catch(err => this.$buefy.toast.open({
-      message: "Error while retrieving products :(",
+      message: "Error while retrieving 'Products' :(",
       type: "is-danger"
-    }))
+    }));
+
+    await this.$axios.get('/api/postal-codes').then((res) => {
+      this.availablePostalCodes = res?.data?.data.map((i) => {
+        return i.attributes.municipality_code
+      });
+    }).catch(err => this.$buefy.toast.open({
+      message: "Error while retrieving 'Postal Codes' :(",
+      type: "is-danger"
+    }));
   }
 }
 </script>
