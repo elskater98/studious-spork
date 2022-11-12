@@ -2,14 +2,21 @@
   <section>
     <div class="container">
       <form @submit.prevent="login">
-        <b-field label="Email" horizontal>
-          <b-input type="email" v-model="username"/>
-        </b-field>
+        <div>
+          <b-field label="Email">
+            <b-input placeholder="Email"
+                     v-model="username"
+                     type="email"
+                     icon="email"
+                     icon-right="close-circle">
+            </b-input>
+          </b-field>
+          <b-field label="Password">
+            <b-input type="password" v-model="password" password-reveal/>
+          </b-field>
+          <b-button native-type="submit" value="Login">Submit</b-button>
+        </div>
 
-        <b-field label="Password" horizontal>
-          <b-input type="password" v-model="password"/>
-        </b-field>
-        <b-button native-type="submit" value="Login"/>
       </form>
     </div>
   </section>
@@ -34,6 +41,10 @@ export default {
             "password": this.password
           }
         }).then(() => {
+          this.$buefy.toast.open({
+            message: "Welcome to our website!",
+            type: "is-success"
+          })
           this.$router.push('/')
         })
       } catch (e) {

@@ -1,5 +1,5 @@
 <template>
-  <b-navbar :fixed-top="true">
+  <b-navbar>
     <template #start>
       <b-navbar-item tag="router-link" :to="{ path: '/' }">
         <b-button icon-left="home">Home</b-button>
@@ -26,9 +26,6 @@ export default {
       await this.$auth.logout();
       await this.$router.push('/login')
     }
-  },
-  mounted() {
-    console.log(this.$auth.loggedIn)
   },
   computed: {
     ...mapGetters(['isAuthenticated'])

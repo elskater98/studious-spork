@@ -24,11 +24,10 @@
       "multiple": false,
       "required": false
     },
-    "postal": {
+    "postal_code": {
       "type": "relation",
       "relation": "oneToMany",
-      "target": "api::postal-code.postal-code",
-      "required": true
+      "target": "api::postal-code.postal-code"
     }
   }
 }
