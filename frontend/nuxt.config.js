@@ -26,7 +26,7 @@ export default {
   components: true,
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
-  buildModules: [],
+  buildModules: ["@nuxtjs/svg"],
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
@@ -41,16 +41,19 @@ export default {
   auth: {
     strategies: {
       local: {
-        scheme: 'refresh',
         token: {
-          property: 'jwt',
-          global: true
+          property: 'jwt'
         },
         user: {},
         endpoints: {
-          login: {url: '/auth/local', method: 'post', propertyName: 'token'}
+          login: {url: '/auth/local', method: 'post', propertyName: 'token'},
+          user: false,
+          logout: false
         },
-        autoLogout: false
+        autoLogout: false,
+        strategies: {
+          logout: '/login',
+        }
       }
     }
   },
